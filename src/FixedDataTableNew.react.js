@@ -606,6 +606,7 @@ var FixedDataTable = React.createClass({
         showLastRowBorder={true}
         width={state.width}
         rowPositionGetter={this._scrollHelper.getRowPosition}
+        rowLiner={this.props.rowLiner}
       />
     );
   },
