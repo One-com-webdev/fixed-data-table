@@ -151,6 +151,7 @@ var FixedDataTableBufferedRows = React.createClass({
               'public/fixedDataTable/hasBottomBorder': hasBottomBorder,
             })
           )}
+          liner={props.rowLiner}
         />;
     }
 

@@ -238,6 +238,7 @@ var FixedDataTableRow = React.createClass({
           offsetTop={undefined}
           zIndex={undefined}
         />
+        {this.props.liner ? <this.props.liner rowIndex={this.index} /> : null}
       </div>
     );
   },
