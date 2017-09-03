@@ -1,6 +1,6 @@
 {
   "name": "fixed-data-table-one.com",
-  "version": "6.4.0",
+  "version": "6.4.0-patch0",
   "description": "A React table component designed to allow presenting thousands of rows of data.",
   "main": "main.js",
   "peerDependencies": {
