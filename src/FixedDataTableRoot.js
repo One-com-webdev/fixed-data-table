@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2015, Facebook, Inc.
+ * Copyright Schrodinger, LLC
  * All rights reserved.
  *
  * This source code is licensed under the BSD-style license found in the
@@ -11,10 +11,10 @@
 
 'use strict';
 
-var FixedDataTable = require('FixedDataTable.react');
-var FixedDataTableCellDefault = require('FixedDataTableCellDefault.react');
-var FixedDataTableColumn = require('FixedDataTableColumn.react');
-var FixedDataTableColumnGroup = require('FixedDataTableColumnGroup.react');
+import FixedDataTable from 'FixedDataTable';
+import FixedDataTableCellDefault from 'FixedDataTableCellDefault';
+import FixedDataTableColumn from 'FixedDataTableColumn';
+import FixedDataTableColumnGroup from 'FixedDataTableColumnGroup';
 
 var FixedDataTableRoot = {
   Cell: FixedDataTableCellDefault,
@@ -23,5 +23,5 @@ var FixedDataTableRoot = {
   Table: FixedDataTable,
 };
 
-FixedDataTableRoot.version = '0.6.4';
+FixedDataTableRoot.version = '0.8.0';
 module.exports = FixedDataTableRoot;
