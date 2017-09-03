@@ -1,63 +1,59 @@
 /**
- * This file provided by Facebook is for non-commercial testing and evaluation
- * purposes only. Facebook reserves all rights not expressly granted.
- *
- * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
- * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
- * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL
- * FACEBOOK BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN
- * ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
- * CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+ * Copyright Schrodinger, LLC
  */
 
 "use strict";
 
 // Require common FixedDataTable CSS.
-require('fixed-data-table/css/layout/ScrollbarLayout.css');
-require('fixed-data-table/css/layout/fixedDataTableLayout.css');
-require('fixed-data-table/css/layout/fixedDataTableCellLayout.css');
-require('fixed-data-table/css/layout/fixedDataTableCellGroupLayout.css');
-require('fixed-data-table/css/layout/fixedDataTableColumnResizerLineLayout.css');
-require('fixed-data-table/css/layout/fixedDataTableRowLayout.css');
-require('fixed-data-table/css/style/fixedDataTable.css');
-require('fixed-data-table/css/style/fixedDataTableCell.css');
-require('fixed-data-table/css/style/fixedDataTableColumnResizerLine.css');
-require('fixed-data-table/css/style/fixedDataTableRow.css');
-require('fixed-data-table/css/style/Scrollbar.css');
+require('fixed-data-table-2/css/layout/ScrollbarLayout.css');
+require('fixed-data-table-2/css/layout/fixedDataTableLayout.css');
+require('fixed-data-table-2/css/layout/fixedDataTableCellLayout.css');
+require('fixed-data-table-2/css/layout/fixedDataTableCellGroupLayout.css');
+require('fixed-data-table-2/css/layout/fixedDataTableColumnResizerLineLayout.css');
+require('fixed-data-table-2/css/layout/fixedDataTableRowLayout.css');
+require('fixed-data-table-2/css/style/fixedDataTable.css');
+require('fixed-data-table-2/css/style/fixedDataTableCell.css');
+require('fixed-data-table-2/css/style/fixedDataTableColumnResizerLine.css');
+require('fixed-data-table-2/css/style/fixedDataTableColumnReorder.css');
+require('fixed-data-table-2/css/style/fixedDataTableRow.css');
+require('fixed-data-table-2/css/style/Scrollbar.css');
 
 var ExampleHeader = require('./ExampleHeader');
 var ExamplesWrapper = require('./ExamplesWrapper');
-var TouchExampleWrapper = require('./TouchExampleWrapper');
 var React = require('react');
 var Constants = require('../Constants');
+const Dimensions = require('react-dimensions');
 
 var ExamplePages = Constants.ExamplePages;
 
 var EXAMPLE_COMPONENTS = {
   [ExamplePages.OBJECT_DATA_EXAMPLE.location]: require('../../examples/ObjectDataExample'),
   [ExamplePages.RESIZE_EXAMPLE.location]: require('../../examples/ResizeExample'),
+  [ExamplePages.REORDER_EXAMPLE.location]: require('../../examples/ReorderExample'),
+  [ExamplePages.HIDE_COLUMN_EXAMPLE.location]: require('../../examples/HideColumnExample'),
+  [ExamplePages.SCROLL_TO_ROW_EXAMPLE.location]: require('../../examples/ScrollToRowExample'),
+  [ExamplePages.SCROLL_TO_COLUMN_EXAMPLE.location]: require('../../examples/ScrollToColumnExample'),
+  [ExamplePages.TOUCH_SCROLL_EXAMPLE.location]: require('../../examples/TouchScrollExample'),
+  [ExamplePages.EXPANDED_EXAMPLE.location]: require('../../examples/ExpandedExample'),
   [ExamplePages.FLEXGROW_EXAMPLE.location]: require('../../examples/FlexGrowExample'),
   [ExamplePages.COLUMN_GROUPS_EXAMPLE.location]: require('../../examples/ColumnGroupsExample'),
+  [ExamplePages.PAGINATION_EXAMPLE.location]: require('../../examples/PaginationExample'),
   [ExamplePages.FILTER_EXAMPLE.location]: require('../../examples/FilterExample'),
   [ExamplePages.SORT_EXAMPLE.location]: require('../../examples/SortExample'),
+  [ExamplePages.RESPONSIVE_EXAMPLE.location]: require('../../examples/ResponsiveExample'),
+  [ExamplePages.STYLING_EXAMPLE.location]: require('../../examples/StylingExample'),
+  [ExamplePages.TOOLTIP_EXAMPLE.location]: require('../../examples/TooltipExample'),
+  [ExamplePages.CONTEXT_EXAMPLE.location]: require('../../examples/ContextExample'),
 };
 
-// Render old examples
-// var EXAMPLE_COMPONENTS_OLD = {
-//   [ExamplePages.OBJECT_DATA_EXAMPLE.location]: require('../../examples/old/ObjectDataExample'),
-//   [ExamplePages.RESIZE_EXAMPLE.location]: require('../../examples/old/ResizeExample'),
-//   [ExamplePages.FLEXGROW_EXAMPLE.location]: require('../../examples/old/FlexGrowExample'),
-//   [ExamplePages.COLUMN_GROUPS_EXAMPLE.location]: require('../../examples/old/ColumnGroupsExample'),
-//   [ExamplePages.FILTER_EXAMPLE.location]: require('../../examples/old/FilterExample'),
-//   [ExamplePages.SORT_EXAMPLE.location]: require('../../examples/old/SortExample'),
-// };
-
-var ExamplesPage = React.createClass({
-  getInitialState() {
-    return {
+class ExamplesPage extends React.Component {
+  constructor(props) {
+    super(props);
+    
+    this.state = {
       renderPage: false
     };
-  },
+  }
 
   render() {
     return (
@@ -66,17 +62,18 @@ var ExamplesPage = React.createClass({
         {this.state.renderPage && this._renderPage()}
       </ExamplesWrapper>
     );
-  },
+  }
 
   _renderPage() {
     var Example = EXAMPLE_COMPONENTS[this.props.page.location];
 
     return (
-      <TouchExampleWrapper {...this.state}>
-        <Example />
-      </TouchExampleWrapper>
+      <Example
+        height={this.state.tableHeight}
+        width={this.state.tableWidth}
+      />
     );
-  },
+  }
 
   componentDidMount() {
     this._update();
@@ -88,12 +85,12 @@ var ExamplesPage = React.createClass({
     } else {
       win.onresize = this._onResize;
     }
-  },
+  }
 
   _onResize() {
     clearTimeout(this._updateTimer);
     this._updateTimer = setTimeout(this._update, 16);
-  },
+  }
 
   _update() {
     var win = window;
@@ -106,6 +103,6 @@ var ExamplesPage = React.createClass({
       tableHeight: win.innerHeight - 200,
     });
   }
-});
+}
 
 module.exports = ExamplesPage;
